@@ -23,8 +23,9 @@ var connection = mysql.createPool({
    host: "localhost",
 	user: "root",
 	password: "sree@1234",
-   database: "dream_latest",   
-   // database: "drm_24",
+   database: "dream_11_03",
+   // database: "dream_latest",   
+   // database: "drm_intl_14",
    
 });
 module.exports = connection;

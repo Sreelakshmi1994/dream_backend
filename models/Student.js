@@ -355,6 +355,9 @@ var Student = {
 						Student_Course_.End_Date_Check,
 						Student_Course_.Offline_Branch_Id,
 						Student_Course_.Offline_Branch,
+
+						Student_Course_.Prefered_Course_Id,
+						Student_Course_.Prefered_Course_Name,
 						 
 					],
 					connection
