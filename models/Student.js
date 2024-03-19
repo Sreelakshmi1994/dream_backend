@@ -355,9 +355,6 @@ var Student = {
 						Student_Course_.End_Date_Check,
 						Student_Course_.Offline_Branch_Id,
 						Student_Course_.Offline_Branch,
-
-						Student_Course_.Prefered_Course_Id,
-						Student_Course_.Prefered_Course_Name,
 						 
 					],
 					connection
@@ -1537,12 +1534,12 @@ return db.query("CALL Delete_Employee_Attendance(@Attendance_Master_Id_ :=?)",[A
 	Search_Employees_List: function (
 		Is_Date_,
 		From_Date_,
-		To_Date_,User_Id_,
+		To_Date_,
 		callback
 	) {
 		return db.query(
-			"CALL Search_Employees_List(@Is_Date_ :=?,@From_Date_ :=?,@To_Date_ :=?,@User_Id_ :=?)",
-			[Is_Date_, From_Date_, To_Date_,User_Id_],
+			"CALL Search_Employees_List(@Is_Date_ :=?,@From_Date_ :=?,@To_Date_ :=?)",
+			[Is_Date_, From_Date_, To_Date_],
 			callback
 		);
 	},
@@ -2748,33 +2745,22 @@ Search_Application_University_Typeahead: function (Application_University_Name, 
 },
 
 Save_Application:function(ApplicationDetails_,callback)
-    { 
-		
-        console.log(ApplicationDetails_)
-    return db.query("CALL Save_Application("+"@Application_Details_Id_ :=?,"+"@Student_Id_ :=?,"+"@Country_Id_ :=?,"+"@Country_Name_ :=?,"+"@University_Id_ :=?,"+"@University_Name_ :=?,"+"@Course_Id_ :=?,"+"@Course_Name_ :=?,"+"@intake_Id_ :=?,"+"@intake_Name_ :=?,"+"@Intake_Year_Id_ :=?,"+"@Intake_Year_Name_ :=?,"+"@Remark_ :=?,"+"@Fees_ :=?,"+"@Course_Link_ :=?,"+"@Duration_Id_ :=?,"+"@Preference_ :=?,"+"@User_Id_ :=?,"+"@Listening_ :=?,"+"@Reading_ :=?,"+"@Writting_ :=?,"+"@Speaking_ :=?,"+"@German_Course_Id_ :=?,"+"@German_Course_Name_ :=?,"+"@Passed_ :=?,"+"@Failed_ :=?)"
-
-    ,[ApplicationDetails_.Application_Details_Id,ApplicationDetails_.Student_Id,ApplicationDetails_.Country_Id,
-        ApplicationDetails_.Country_Name,ApplicationDetails_.University_Id,ApplicationDetails_.University_Name,
-        ApplicationDetails_.Course_Id,ApplicationDetails_.Course_Name,ApplicationDetails_.intake_Id,
-        ApplicationDetails_.intake_Name,ApplicationDetails_.Intake_Year_Id,ApplicationDetails_.Intake_Year_Name,ApplicationDetails_.Remark,
-		ApplicationDetails_.Fees,ApplicationDetails_.Course_Link,
-        ApplicationDetails_.Duration_Id,ApplicationDetails_.Preference,ApplicationDetails_.User_Id,
-		ApplicationDetails_.IELTS_Listening,
-		ApplicationDetails_.IELTS_Reading,		
-		ApplicationDetails_.IELTS_Writting,
-		ApplicationDetails_.IELTS_Speaking,
-		ApplicationDetails_.German_Course_Id,
-		ApplicationDetails_.German_Course_Name,
-		ApplicationDetails_.Passed,
-		ApplicationDetails_.Failed
-
-
-	
+    { 		
+    console.log(ApplicationDetails_)
+    return db.query("CALL Save_Application("+"@Application_Details_Id_ :=?,"+"@Student_Id_ :=?,"+"@Country_Id_ :=?,"+"@Country_Name_ :=?,"
+	+"@University_Id_ :=?,"+"@University_Name_ :=?,"+"@Course_Id_ :=?,"+"@Course_Name_ :=?,"+"@intake_Id_ :=?,"+"@intake_Name_ :=?,"
+	+"@Intake_Year_Id_ :=?,"+"@Intake_Year_Name_ :=?,"+"@Remark_ :=?,"+"@Fees_ :=?,"+"@Course_Link_ :=?,"+"@Duration_Id_ :=?,"+"@Preference_ :=?,"
+	+"@User_Id_ :=?,"+"@Listening_ :=?,"+"@Reading_ :=?,"+"@Writting_ :=?,"+"@Speaking_ :=?,"+"@German_Course_Id_ :=?,"+"@German_Course_Name_ :=?,"
+	+"@Passed_ :=?,"+"@Failed_ :=?,"+"@OverAll_:=?)",[ApplicationDetails_.Application_Details_Id,ApplicationDetails_.Student_Id,
+		ApplicationDetails_.Country_Id,ApplicationDetails_.Country_Name,ApplicationDetails_.University_Id,ApplicationDetails_.University_Name,
+        ApplicationDetails_.Course_Id,ApplicationDetails_.Course_Name,ApplicationDetails_.intake_Id,ApplicationDetails_.intake_Name,
+		ApplicationDetails_.Intake_Year_Id,ApplicationDetails_.Intake_Year_Name,ApplicationDetails_.Remark,ApplicationDetails_.Fees,
+		ApplicationDetails_.Course_Link,ApplicationDetails_.Duration_Id,ApplicationDetails_.Preference,ApplicationDetails_.User_Id,
+		ApplicationDetails_.IELTS_Listening,ApplicationDetails_.IELTS_Reading,ApplicationDetails_.IELTS_Writting,ApplicationDetails_.IELTS_Speaking,
+		ApplicationDetails_.German_Course_Id,ApplicationDetails_.German_Course_Name,ApplicationDetails_.Passed,ApplicationDetails_.Failed,
+		ApplicationDetails_.IELTS_Overall
 	],callback);
     },
-
-
-
 
 	Save_FeesReceipt:function(Fees_Receipt_,callback)
     { 

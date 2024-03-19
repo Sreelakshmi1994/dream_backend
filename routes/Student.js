@@ -1425,7 +1425,6 @@ router.get("/Search_Employees_List/", function (req, res, next) {
 			req.query.Is_Date_,
 			req.query.From_Date_,
 			req.query.To_Date_,
-			req.query.User_Id_,
 			function (err, rows) {
 				if (err) {
 					res.json(err);
