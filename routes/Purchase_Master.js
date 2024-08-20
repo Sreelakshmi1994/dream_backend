@@ -36,8 +36,8 @@
               // "File_Name": Doc_Image,
               "Item_Group_Id": req.body.Item_Group_Id,
               "Purchase_Status_Id":req.body.Purchase_Status_Id,
-              "Approved_By":req.body.Approved_By
-              // "Item_Group_Name": req.body.Item_Group_Name,
+              "Approved_By":req.body.Approved_By,
+              "title": req.body.title
            };
   
           

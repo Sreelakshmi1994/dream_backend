@@ -94,10 +94,9 @@ router.post("/Save_Student", upload.array("myFile"), (req, res, next) => {
 				Associates_Agent_Id: req.body.Associates_Agent_Id,
 				
 				Processing_Agent_Id: req.body.Processing_Agent_Id,
-				Documents_Remark: req.body.Documents_Remark,
-
-				  
-
+				 
+				Preffered_Course: req.body.Preffered_Course,
+				 
 
 			};
 		}
@@ -575,6 +574,76 @@ router.get(
 		}
 	}
 );
+
+router.get("/Notification_Read_Status/:Notification_Count_?/:User_Id_ ?", function (req, res, next) {
+    try {
+        Student.Notification_Read_Status(req.params.Notification_Count_,req.params.User_Id_, function (err, rows) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(rows);
+            }
+        });
+    } catch (e) {
+    } finally {
+    }
+});
+
+router.get("/update_Read_Status/", function (req, res, next) {
+	try {
+		Student.update_Read_Status(
+			req.query.login_user_,
+			req.query.Notification_Id_,
+			function (err, rows) {
+				if (err) {
+					;
+					res.json(err);
+				} else {
+					res.json(rows);
+				}
+			}
+		);
+	} catch (e) {
+	} finally {
+	}
+});
+
+router.get("/Reset_Notification_Count/:User_Id_?", function (req, res, next) {
+    try {
+        Student.Reset_Notification_Count(req.params.User_Id_, function (err, rows) {
+            if (err) {
+                ;
+                res.json(err);
+            } else {
+                res.json(rows);
+            }
+        });
+    } catch (e) {
+    } finally {
+    }
+});
+
+router.get("/Get_All_Notification/", function (req, res, next) {
+    try {
+        Student.Get_All_Notification(
+            req.query.Date_,
+            req.query.User_Id_,
+            req.query.login_Id_,
+            function (err, rows) {
+                if (err) {
+                    ;
+                    res.json(err);
+					console.log(err);
+                } else {
+                    res.json(rows);
+                }
+            }
+        );
+    } catch (e) {
+		console.log(e);
+    } finally {
+    }
+});
 router.get("/Get_FollowUp_Details/:Student_Id_?", async (req, res, next) => {
 	try {
 		const result = await Student.Get_FollowUp_Details(req.params.Student_Id_);
@@ -1000,6 +1069,7 @@ router.get("/Search_Attendance/", function (req, res, next) {
 			function (err, rows) {
 				if (err) {
 					res.json(err);
+					console.log(err);
 				} else {
 					console.log("Result1234",rows);
 					res.json(rows);
@@ -1007,6 +1077,7 @@ router.get("/Search_Attendance/", function (req, res, next) {
 			}
 		);
 	} catch (e) {
+		console.log(e);
 	} finally {
 	}
 });
@@ -1181,6 +1252,7 @@ router.get("/Search_Lead_Report/", function (req, res, next) {
 			req.query.status_,
 			req.query.Course_Id_,
 			req.query.Enquiry_For_Id_,
+			req.query.MasterCourse_Id_,
 			function (err, rows) {
 				if (err) {
 					res.json(err);
@@ -1193,6 +1265,34 @@ router.get("/Search_Lead_Report/", function (req, res, next) {
 	} finally {
 	}
 });
+
+
+router.get("/Search_Followup_History_Report/", function (req, res, next) {
+	try {
+		Student.Search_Followup_History_Report(
+			req.query.Is_Date_,
+			req.query.From_Date_,
+			req.query.To_Date_,
+			req.query.Enquiry_Source_,
+			req.query.Login_User_,
+			req.query.User_Id_,
+			req.query.status_,
+			req.query.Course_Id_,
+			req.query.Enquiry_For_Id_,
+			function (err, rows) {
+				if (err) {
+					res.json(err);
+				} else {
+					res.json(rows);
+				}
+			}
+		);
+	} catch (e) {
+	} finally {
+	}
+});
+
+
 router.get("/Search_Transaction/", function (req, res, next) {
 	try {
 		Student.Search_Transaction(
@@ -1935,9 +2035,32 @@ router.get("/Search_Company_Typeahead/", function (req, res, next) {
 			}
 		);
 	} catch (e) {
+		console.log(e)
 	} finally {
 	}
 });
+
+
+
+router.get("/Search_Book_Name_Typeahead/", function (req, res, next) {
+	try {
+		Student.Search_Book_Name_Typeahead(
+			req.query.Book_Name,
+			function (err, rows) {
+				if (err) {
+					console.log(err);
+					res.json(err);
+				} else {
+					res.json(rows);
+				}
+			}
+		);
+	} catch (e) {
+	} finally {
+	}
+});
+
+
 
 router.get("/Search_District_Typeahead/", function (req, res, next) {
 	try {
@@ -3122,6 +3245,7 @@ if (err)
 {
     
 res.json(err);
+console.log(err);
 }
 else 
 {
@@ -3131,6 +3255,7 @@ res.json(rows);
 }
 catch (e) 
 {
+	console.log(e);
     
 }
 finally 
@@ -3713,7 +3838,6 @@ router.post('/Save_Student_Document/',async function(req,res,next)
 	  {
 	  }
 	   });
-<<<<<<< HEAD
 
 	   
   router.get('/Search_Branch_User_Typeahead/:Branch_Id_?/:User_Details_Name_?',function(req,res,next)
@@ -3792,8 +3916,6 @@ router.post('/Save_Student_Document/',async function(req,res,next)
 	// 		return res.send(e);
 	// 	}
 	// });
-=======
->>>>>>> parent of b8e3e6a (changes)
 	
 
 

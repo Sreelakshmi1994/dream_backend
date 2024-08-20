@@ -212,12 +212,13 @@ Search_Booksissued_Typeahead: function (Books_Id,Books_Name,Books_No, callback) 
 },
 
 
-Search_Student_Reg_Typeahead: function (Registration_No, callback) {
-    if (Registration_No === undefined || Registration_No === "undefined")
-    Registration_No = "";
+Search_Student_Reg_Typeahead: function (Registration_No_, callback) {
+    console.log(Registration_No_)
+    if (Registration_No_ === undefined || Registration_No_ === "undefined")
+    Registration_No_ = "";
     return db.query(
-        "CALL Search_Student_Reg_Typeahead(@Registration_No :=?)",
-        [Registration_No],
+        "CALL Search_Student_Reg_Typeahead(@Registration_No_ :=?)",
+        [Registration_No_],
         callback
     );
 },

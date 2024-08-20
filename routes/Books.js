@@ -336,8 +336,9 @@ router.get("/Search_Student_Phonenumber_Typeahead/", function (req, res, next) {
 
 router.get("/Search_Student_Reg_Typeahead/", function (req, res, next) {
 	try {
+		console.log(req.query.Registration_No_)
 		Books.Search_Student_Reg_Typeahead(
-			req.query.Phone,
+			req.query.Registration_No_,
             
 			function (err, rows) {
 				if (err) {

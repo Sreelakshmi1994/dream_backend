@@ -52,7 +52,8 @@
               "Item_Group_Name": req.body.Item_Group_Name,
               "Payment_Status_Id":req.body.Payment_Status_Id,
               "Approved_By":req.body.Approved_By,
-              "User_Id":req.body.User_Id
+              "User_Id":req.body.User_Id,
+              "title": req.body.title
            };
   
           

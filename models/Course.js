@@ -26,7 +26,9 @@ var Course=
                 Course_.Agent_Amount, Course_.User_Id, Course_.Total_Fees,
                 Course_.Fees_Type_Id,
                 Course_.Course_Subject,Course_.Course_Fees,Course_.Is_Check,
-                Course_.MasterCourse_Id,Course_.MasterCourse_Name], connection)).result();
+                Course_.MasterCourse_Id,Course_.MasterCourse_Name,
+                Course_.reverse_cal_,Course_.Gst 
+                ,Course_.Hsn_code,Course_.Cgst,Course_.Sgst ], connection)).result();
             
             await connection.commit();
             connection.release();

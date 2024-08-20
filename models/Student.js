@@ -181,6 +181,41 @@ var Student = {
 		]).result();
 		return { 0: { FollowUp } };
 	},
+
+	Notification_Read_Status: function (Notification_Count_,User_Id_, callback) {
+        console.log(Notification_Count_,User_Id_)
+        return db.query(
+            "CALL Notification_Read_Status(@Notification_Count_ :=?,@User_Id_ :=?)",
+            [Notification_Count_,User_Id_],
+            callback
+        );
+    },
+
+
+
+
+
+	update_Read_Status: function (login_user_, Notification_Id_, callback) {
+		return db.query(
+			"CALL update_Read_Status(@login_user_ :=?,@Notification_Id_ :=?)",
+			[login_user_, Notification_Id_],
+			callback
+		);
+	},
+	Reset_Notification_Count: function (User_Id_, callback) {
+        return db.query(
+            "CALL Reset_Notification_Count(@User_Id_ :=?)",
+            [User_Id_],
+            callback
+        );
+    },
+    Get_All_Notification: function (Date_, User_Id_, login_Id_, callback) {
+        return db.query(
+            "CALL Get_All_Notification(@Date_ :=?,@User_Id_ :=?,@login_Id_ :=?)",
+            [Date_, User_Id_, login_Id_],
+            callback
+        );
+    },
 	Get_Last_FollowUp: function (Users_Id_, callback) {
 		return db.query(
 			"CALL Get_Last_FollowUp(@Users_Id_ :=?)",
@@ -311,6 +346,7 @@ var Student = {
 			var connection = await pool.getConnection();
 			try {
 				console.log(Student_Course_)
+				console.log(Student_Course_.Student_Fees_Installment_Details)
 				const result1 = await new storedProcedure(
 					"Save_Student_Course",
 					[
@@ -355,6 +391,11 @@ var Student = {
 						Student_Course_.End_Date_Check,
 						Student_Course_.Offline_Branch_Id,
 						Student_Course_.Offline_Branch,
+						Student_Course_.reverse_cal,
+						Student_Course_.Gst 
+                ,Student_Course_.Hsn_code,
+				Student_Course_.Cgst,
+				Student_Course_.Sgst
 						 
 					],
 					connection
@@ -467,8 +508,8 @@ var Student = {
 				"@Associates_Agent_Id_ :=?," +
 				"@Processing_Agent_Id_ :=?," +
 				"@Associates_Agent_Commission_ :=?," +
-				"@Processing_Agent_Commission_ :=?" +
-				
+				"@Processing_Agent_Commission_ :=?," +
+				"@Discount_ :=?" +
 				")",
 
 			[
@@ -494,7 +535,8 @@ var Student = {
 				Receipt_Voucher_.Associates_Agent_Id,
 				Receipt_Voucher_.Processing_Agent_Id,
 				Receipt_Voucher_.Associates_Agent_Commission,
-				Receipt_Voucher_.Processing_Agent_Commission
+				Receipt_Voucher_.Processing_Agent_Commission,
+				Receipt_Voucher_.Discount
 			],
 			callback
 		);
@@ -1078,6 +1120,7 @@ var Student = {
 						Attendance_Master_.Attendance_Subject,
 						Attendance_Master_.Attendance_Student_Value,
 						Attendance_Master_.Attendance_Subject_Value,
+						Attendance_Master_.Date,
 						
 					],
 					connection
@@ -1206,11 +1249,42 @@ return db.query("CALL Delete_Employee_Attendance(@Attendance_Master_Id_ :=?)",[A
 		User_Id_,
 		status_,
 		Course_Id_,
+		Enquiry_For_Id_,MasterCourse_Id_,
+		callback
+	) {
+		return db.query(
+			"CALL Search_Lead_Report(@Is_Date_ :=?,@From_Date_ :=?,@To_Date_ :=?,@Enquiry_Source_ :=?,@Login_User_:=?,@User_Id_:=?,@status_:=?,@Course_Id_:=?,@Enquiry_For_Id_:=?,@MasterCourse_Id_:=?)",
+			[
+				Is_Date_,
+				From_Date_,
+				To_Date_,
+				Enquiry_Source_,
+				Login_User_,
+				User_Id_,
+				status_,
+				Course_Id_,
+				Enquiry_For_Id_,
+				MasterCourse_Id_,
+			],
+			callback
+		);
+	},
+
+
+	Search_Followup_History_Report: function (
+		Is_Date_,
+		From_Date_,
+		To_Date_,
+		Enquiry_Source_,
+		Login_User_,
+		User_Id_,
+		status_,
+		Course_Id_,
 		Enquiry_For_Id_,
 		callback
 	) {
 		return db.query(
-			"CALL Search_Lead_Report(@Is_Date_ :=?,@From_Date_ :=?,@To_Date_ :=?,@Enquiry_Source_ :=?,@Login_User_:=?,@User_Id_:=?,@status_:=?,@Course_Id_:=?,@Enquiry_For_Id_:=?)",
+			"CALL Search_Followup_History_Report(@Is_Date_ :=?,@From_Date_ :=?,@To_Date_ :=?,@Enquiry_Source_ :=?,@Login_User_:=?,@User_Id_:=?,@status_:=?,@Course_Id_:=?,@Enquiry_For_Id_:=?)",
 			[
 				Is_Date_,
 				From_Date_,
@@ -1225,6 +1299,9 @@ return db.query("CALL Delete_Employee_Attendance(@Attendance_Master_Id_ :=?)",[A
 			callback
 		);
 	},
+
+
+
 	Search_Transaction: function (Course_, Portion_Covered_, callback) {
 		return db.query(
 			"CALL Search_Transaction(@Course_ :=?,@Portion_Covered_ :=?)",
@@ -1914,6 +1991,17 @@ return db.query("CALL Delete_Employee_Attendance(@Attendance_Master_Id_ :=?)",[A
 		return db.query(
 			"CALL Search_Company_Typeahead(@Company_Name :=?)",
 			[Company_Name],
+			callback
+		);
+	},
+
+
+	Search_Book_Name_Typeahead: function (Book_Name, callback) {
+		if (Book_Name === undefined || Book_Name === "undefined")
+			Book_Name = "";
+		return db.query(
+			"CALL Search_Book_Name_Typeahead(@Book_Name :=?)",
+			[Book_Name],
 			callback
 		);
 	},
@@ -2757,14 +2845,15 @@ Save_Application:function(ApplicationDetails_,callback)
 	+"@University_Id_ :=?,"+"@University_Name_ :=?,"+"@Course_Id_ :=?,"+"@Course_Name_ :=?,"+"@intake_Id_ :=?,"+"@intake_Name_ :=?,"
 	+"@Intake_Year_Id_ :=?,"+"@Intake_Year_Name_ :=?,"+"@Remark_ :=?,"+"@Fees_ :=?,"+"@Course_Link_ :=?,"+"@Duration_Id_ :=?,"+"@Preference_ :=?,"
 	+"@User_Id_ :=?,"+"@Listening_ :=?,"+"@Reading_ :=?,"+"@Writting_ :=?,"+"@Speaking_ :=?,"+"@German_Course_Id_ :=?,"+"@German_Course_Name_ :=?,"
-	+"@Passed_ :=?,"+"@Failed_ :=?,"+"@OverAll_:=?)",[ApplicationDetails_.Application_Details_Id,ApplicationDetails_.Student_Id,
+	+"@Passed_ :=?,"+"@Failed_ :=?,"+"@OverAll_:=?,"+"@Is_Agent_:=?,"+"@Agent_Amount_:=?,"+"@Associate_Amount_:=?,"+"@Is_Associate_:=?)",[ApplicationDetails_.Application_Details_Id,ApplicationDetails_.Student_Id,
 		ApplicationDetails_.Country_Id,ApplicationDetails_.Country_Name,ApplicationDetails_.University_Id,ApplicationDetails_.University_Name,
         ApplicationDetails_.Course_Id,ApplicationDetails_.Course_Name,ApplicationDetails_.intake_Id,ApplicationDetails_.intake_Name,
 		ApplicationDetails_.Intake_Year_Id,ApplicationDetails_.Intake_Year_Name,ApplicationDetails_.Remark,ApplicationDetails_.Fees,
 		ApplicationDetails_.Course_Link,ApplicationDetails_.Duration_Id,ApplicationDetails_.Preference,ApplicationDetails_.User_Id,
 		ApplicationDetails_.IELTS_Listening,ApplicationDetails_.IELTS_Reading,ApplicationDetails_.IELTS_Writting,ApplicationDetails_.IELTS_Speaking,
 		ApplicationDetails_.German_Course_Id,ApplicationDetails_.German_Course_Name,ApplicationDetails_.Passed,ApplicationDetails_.Failed,
-		ApplicationDetails_.IELTS_Overall
+		ApplicationDetails_.IELTS_Overall,
+		ApplicationDetails_.Is_Agent,ApplicationDetails_.Agent_Amount,ApplicationDetails_.Associate_Amount,ApplicationDetails_.Is_Associate 
 	],callback);
     },
 
@@ -3059,6 +3148,7 @@ Save_Employee_Attendance: async function (Employee_Attendance_Master_) {
 					Employee_Attendance_Master_.To_Date,
 					Employee_Attendance_Master_.Users_Id,
 					Employee_Attendance_Master_.Employee_Attendance_Details_,
+					Employee_Attendance_Master_.Entry_Date,
 					
 				],
 				connection
@@ -3159,7 +3249,6 @@ return db.query("CALL Search_Process_Type(@Process_Type_Name_ :=?)",[Process_Typ
   },
 
 
-<<<<<<< HEAD
   Search_Branch_User_Typeahead:function(Branch_Id_,User_Details_Name_,callback)
 { 
   if(User_Details_Name_==='undefined'||User_Details_Name_===''||User_Details_Name_===undefined )
@@ -3251,7 +3340,5 @@ Search_Branch_Typeahead:function(Branch_Name_,callback)
 // },
 
 
-=======
->>>>>>> parent of b8e3e6a (changes)
 };
 module.exports = Student;
