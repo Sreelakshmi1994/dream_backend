@@ -846,14 +846,14 @@ router.post("/Save_Student_Receipt_Voucher/", function (req, res, next) {
 	try {
 		Student.Save_Student_Receipt_Voucher(req.body, function (err, rows) {
 			if (err) {
-				console.log(err);
+				// console.log(err);
 				res.json(err);
 			} else {
 				res.json(rows);
 			}
 		});
 	} catch (e) {
-		console.log(e);
+		// console.log(e);
 	} finally {
 	}
 });
@@ -1425,6 +1425,8 @@ router.get("/Search_Employees_List/", function (req, res, next) {
 			req.query.Is_Date_,
 			req.query.From_Date_,
 			req.query.To_Date_,
+			req.query.User_Id_,
+			req.query.Working_Status_,
 			function (err, rows) {
 				if (err) {
 					res.json(err);
@@ -3711,6 +3713,87 @@ router.post('/Save_Student_Document/',async function(req,res,next)
 	  {
 	  }
 	   });
+<<<<<<< HEAD
+
+	   
+  router.get('/Search_Branch_User_Typeahead/:Branch_Id_?/:User_Details_Name_?',function(req,res,next)
+  { 
+  try 
+  {
+    Student.Search_Branch_User_Typeahead(req.params.Branch_Id_,req.params.User_Details_Name_, function (err, rows) 
+  {
+   if (err) 
+   {
+     
+   res.json(err);
+   }
+   else 
+   {
+     res.json(rows);
+   }
+   });
+   }
+  catch (e) 
+  {
+  }
+  finally 
+  {
+  
+  }
+   });
+
+
+   router.get('/Search_Branch_Typeahead/:Branch_Name_?',function(req,res,next)
+   { 
+   try 
+   {
+    Student.Search_Branch_Typeahead(req.params.Branch_Name_, function (err, rows) 
+  
+   {
+    if (err) 
+    {
+    res.json(err);
+    }
+    else 
+    {
+      res.json(rows);
+    }
+    });
+    }
+   catch (e) 
+   {
+   }
+   finally 
+   {
+   }
+    });
+
+	router.post("/Save_Student_Data_FollowUp/", function (req, res) {
+		try {
+			Student.Save_Student_Data_FollowUp(req.body, function (err, rows) {
+			if (err) {
+			  res.json(err);
+			  console.log(err);
+			} else {
+			  res.json(rows);
+			}
+		  });
+		} catch (e) {
+		} finally {
+		}
+	  });
+
+	//   router.post("/Fees_Payment_Whatsapp/", async function (req, res, next) {
+	// 	try {
+	// 		const resp = await Student.Fees_Payment_Whatsapp(req.body);
+	// 		return res.send(resp);
+	// 	} catch (e) {
+	// 		console.log(e)
+	// 		return res.send(e);
+	// 	}
+	// });
+=======
+>>>>>>> parent of b8e3e6a (changes)
 	
 
 

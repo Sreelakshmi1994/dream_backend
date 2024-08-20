@@ -436,7 +436,13 @@ var Student = {
 		);
 	},
 	Save_Student_Receipt_Voucher: function (Receipt_Voucher_, callback) {
-		 console.log(Receipt_Voucher_)
+		//  console.log(Receipt_Voucher_);
+
+		console.log(Receipt_Voucher_.Associates_Agent_Id);
+		console.log(Receipt_Voucher_.Processing_Agent_Id);
+		console.log(Receipt_Voucher_.Associates_Agent_Commission);
+		console.log(Receipt_Voucher_.Processing_Agent_Commission);
+
 		return db.query(
 			"CALL Save_Student_Receipt_Voucher(" +
 				"@Receipt_Voucher_Id_ :=?," +
@@ -1534,12 +1540,12 @@ return db.query("CALL Delete_Employee_Attendance(@Attendance_Master_Id_ :=?)",[A
 	Search_Employees_List: function (
 		Is_Date_,
 		From_Date_,
-		To_Date_,
+		To_Date_,User_Id_,Working_Status_,
 		callback
 	) {
 		return db.query(
-			"CALL Search_Employees_List(@Is_Date_ :=?,@From_Date_ :=?,@To_Date_ :=?)",
-			[Is_Date_, From_Date_, To_Date_],
+			"CALL Search_Employees_List(@Is_Date_ :=?,@From_Date_ :=?,@To_Date_ :=?,@User_Id_ :=?,@Working_Status_ :=?)",
+			[Is_Date_, From_Date_, To_Date_,User_Id_,Working_Status_],
 			callback
 		);
 	},
@@ -3153,5 +3159,99 @@ return db.query("CALL Search_Process_Type(@Process_Type_Name_ :=?)",[Process_Typ
   },
 
 
+<<<<<<< HEAD
+  Search_Branch_User_Typeahead:function(Branch_Id_,User_Details_Name_,callback)
+{ 
+  if(User_Details_Name_==='undefined'||User_Details_Name_===''||User_Details_Name_===undefined )
+  User_Details_Name_='';
+return db.query("CALL Search_Branch_User_Typeahead(@Branch_Id_ :=?,@User_Details_Name_ :=?)",[Branch_Id_,User_Details_Name_],callback);
+},
+
+Search_Branch_Typeahead:function(Branch_Name_,callback)
+        { 
+        if(Branch_Name_==='undefined'||Branch_Name_===''||Branch_Name_===undefined )
+        Branch_Name_='';
+        return db.query("CALL Search_Branch_Typeahead(@Branch_Name_ :=?)",[Branch_Name_],callback);
+        },
+
+		Save_Student_Data_FollowUp: function (Student_Details, callback) {
+			console.log(Student_Details);
+			return db.query(
+				"CALL Save_Student_Data_FollowUp(@Student_Selected_Details_ :=?,@By_User_Id_ :=?,@Next_FollowUp_Date_ :=?,@User_Id_ :=?,@User_Name_ :=?,@By_User_Name_ :=?,@Full_Transfer_Value_ :=?,@Remark_ :=?)",
+				[
+					JSON.stringify(Student_Details.Student_Selected_Details),
+					Student_Details.By_User_Id,
+					Student_Details.Next_FollowUp_Date,
+					Student_Details.User_Id,
+					Student_Details.User_Name,
+					Student_Details.By_User_Name,
+					Student_Details.Full_Transfer_Value,
+					Student_Details.Remark,
+					
+				],
+				callback
+			);
+		},    
+		
+		
+		
+// Fees_Payment_Whatsapp: async function (Fees_Whatsapp_) {
+
+// 	try {
+
+// 		const data = {
+// 			"to": ""+Fees_Whatsapp_.to+"",
+// 			"type": "template",
+// 			"templateName": "api_trackbox_fee_jan2023",
+// 			"language": "en",
+// 			"header": null,
+// 			"body":{
+// 				"parameters": [
+// 					{
+// 						"type": "text",
+// 						"text": Fees_Whatsapp_.student
+// 					},
+// 					{
+// 						"type": "text",
+// 						"text": Fees_Whatsapp_.payment_amount
+// 					},
+// 					{
+// 						"type": "text",
+// 						"text": Fees_Whatsapp_.pending_amount
+// 					},
+// 					{
+// 						"type": "text",
+// 						"text": Fees_Whatsapp_.next_payment_date
+// 					}
+// 					,
+// 					{
+// 						"type": "text",
+// 						"text": Fees_Whatsapp_.tostaff
+// 					}
+// 				]
+// 			},
+// 			"button": null
+// 		};
+// 			//  console.log(response)
+// 			const response = await axios.post("https://api.telinfy.net/gaca/whatsapp/templates/message", data, { headers: {
+// 				'Content-Type': 'application/json',
+// 				'Api-Key': '0ea03cd8-169f-4f50-8254-94f50dbcfdaa'
+// 			} });
+// 		// console.log(body)
+// 		console.log(response)
+// 		return response.data;
+		
+// 	}
+	
+// 	 catch (error) {
+// 		// console.log(response)
+// 		console.log(error)
+// 		throw error;
+// 	}
+// },
+
+
+=======
+>>>>>>> parent of b8e3e6a (changes)
 };
 module.exports = Student;
