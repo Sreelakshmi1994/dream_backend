@@ -3282,6 +3282,28 @@ Search_Branch_Typeahead:function(Branch_Name_,callback)
 			);
 		},    
 		
+
+
+		
+ Save_Student_Followup_Pending:function(Student_Followup_,callback)
+ { 
+return db.query("CALL Save_Student_Followup_Pending("+
+"@Student_Id_ :=?,"+
+"@Next_FollowUp_Date_ :=?,"+
+"@Status_ :=?,"+
+"@To_User_Id_ :=?,"+
+"@By_User_Id_ :=?,"+
+"@Remark_ :=?"+")"
+ ,[
+Student_Followup_.Student_Id,
+Student_Followup_.Next_FollowUp_Date,
+Student_Followup_.Status_Id,
+Student_Followup_.To_User_Id,
+Student_Followup_.By_User_Id,
+Student_Followup_.Remark
+],callback);
+ }
+ ,
 		
 		
 // Fees_Payment_Whatsapp: async function (Fees_Whatsapp_) {

@@ -3916,6 +3916,32 @@ router.post('/Save_Student_Document/',async function(req,res,next)
 	// 		return res.send(e);
 	// 	}
 	// });
+
+
+
+	router.post('/Save_Student_Followup_Pending/',function(req,res,next)
+ { 
+ try 
+ {
+Student.Save_Student_Followup_Pending(req.body, function (err, rows) 
+ {
+  if (err) 
+  {console.log(err)
+  res.json(err);
+  }
+  else 
+  {
+    res.json(rows);
+  }
+  });
+  }
+ catch (e) 
+ {
+ }
+ finally 
+ {
+ }
+  });
 	
 
 
