@@ -3149,6 +3149,9 @@ Save_Employee_Attendance: async function (Employee_Attendance_Master_) {
 					Employee_Attendance_Master_.Users_Id,
 					Employee_Attendance_Master_.Employee_Attendance_Details_,
 					Employee_Attendance_Master_.Entry_Date,
+					// Employee_Attendance_Master_.Leave_Mode_Id,
+					// Employee_Attendance_Master_.Leave_Mode_Name,
+					
 					
 				],
 				connection
