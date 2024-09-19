@@ -184,6 +184,113 @@ router.get('/Get_Client_Accounts/:Client_Accounts_Id_?',function(req,res,next)
   {
   }
   });
+
+
+   
+router.get('/Get_Payment_Voucher_Details/:Voucher_No_?',function(req,res,next)
+{ 
+try 
+{
+Client_Accounts.Get_Payment_Voucher_Details(req.params.Voucher_No_,function (err, rows) 
+{
+if (err) 
+{
+res.json(err);
+}
+else 
+{
+res.json(rows);
+}
+});
+}
+catch (e) 
+{
+}
+finally 
+{
+}
+});
+
+
+
+   
+router.get('/Get_Receipt_voucher_Details/:Voucher_No_?',function(req,res,next)
+{ 
+try 
+{
+Client_Accounts.Get_Receipt_voucher_Details(req.params.Voucher_No_,function (err, rows) 
+{
+if (err) 
+{
+res.json(err);
+}
+else 
+{
+res.json(rows);
+}
+});
+}
+catch (e) 
+{
+}
+finally 
+{
+}
+});
+
+
+
+   
+router.get('/Get_Contra_Entry_Details/:Voucher_No_?',function(req,res,next)
+{ 
+try 
+{
+Client_Accounts.Get_Contra_Entry_Details(req.params.Voucher_No_,function (err, rows) 
+{
+if (err) 
+{
+res.json(err);
+}
+else 
+{
+res.json(rows);
+}
+});
+}
+catch (e) 
+{
+}
+finally 
+{
+}
+});
+
+
+  
+router.get('/Get_Journal_Entry_Details/:Voucher_No_?',function(req,res,next)
+{ 
+try 
+{
+Client_Accounts.Get_Journal_Entry_Details(req.params.Voucher_No_,function (err, rows) 
+{
+if (err) 
+{
+res.json(err);
+}
+else 
+{
+res.json(rows);
+}
+});
+}
+catch (e) 
+{
+}
+finally 
+{
+}
+});
+
 router.get('/Delete_Client_Accounts/:Client_Accounts_Id_?',function(req,res,next)
   { 
   try 

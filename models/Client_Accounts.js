@@ -27,6 +27,28 @@ Get_Client_Accounts:function(Client_Accounts_Id_,callback)
     { 
     return db.query("CALL Get_Client_Accounts(@Client_Accounts_Id_ :=?)",[Client_Accounts_Id_],callback);
     } ,
+
+    Get_Payment_Voucher_Details:function(Voucher_No_,callback)
+    { 
+    return db.query("CALL Get_Payment_Voucher_Details(@Voucher_No_ :=?)",[Voucher_No_],callback);
+    } ,
+
+    Get_Receipt_voucher_Details:function(Voucher_No_,callback)
+    { 
+    return db.query("CALL Get_Receipt_voucher_Details(@Voucher_No_ :=?)",[Voucher_No_],callback);
+    } ,
+
+
+    Get_Contra_Entry_Details:function(Voucher_No_,callback)
+    { 
+    return db.query("CALL Get_Contra_Entry_Details(@Voucher_No_ :=?)",[Voucher_No_],callback);
+    } ,
+    Get_Journal_Entry_Details:function(Voucher_No_,callback)
+    { 
+    return db.query("CALL Get_Journal_Entry_Details(@Voucher_No_ :=?)",[Voucher_No_],callback);
+    } ,
+
+
 Search_Customer:function(Client_Accounts_Name_,Employee_Id,callback)
     { 
     if (Client_Accounts_Name_==='undefined'||Client_Accounts_Name_===''||Client_Accounts_Name_===undefined )
